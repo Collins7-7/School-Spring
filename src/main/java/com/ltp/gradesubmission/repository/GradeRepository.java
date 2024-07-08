@@ -1,5 +1,6 @@
 package com.ltp.gradesubmission.repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
@@ -14,4 +15,8 @@ public interface GradeRepository extends CrudRepository<Grade, Long> {
 
     @Transactional
     void deleteByStudentIdAndCourseId(Long studentId, Long courseId);
+
+    List<Grade> findByStudentId(Long studentId);
+
+    List<Grade> findByCourseId(Long courseId);
 }
