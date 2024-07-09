@@ -8,6 +8,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
+
+import com.ltp.gradesubmission.validation.Score;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,7 +19,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "grade")
+@Table(name = "grade", uniqueConstraints = {
+        @UniqueConstraint(columnNames = { "student_id", "course_id" })
+})
 @Getter
 @Setter
 @RequiredArgsConstructor
@@ -29,6 +34,7 @@ public class Grade {
     @Column(name = "id")
     private Long id;
 
+    @Score
     @NonNull
     @Column(name = "score", nullable = false)
     private String score;
