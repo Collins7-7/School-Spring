@@ -9,6 +9,7 @@ import com.ltp.gradesubmission.entity.Course;
 import com.ltp.gradesubmission.entity.Grade;
 import com.ltp.gradesubmission.entity.Student;
 import com.ltp.gradesubmission.exception.GradeNotFoundException;
+import com.ltp.gradesubmission.exception.StudentNotEnrolledException;
 import com.ltp.gradesubmission.repository.CourseRepository;
 import com.ltp.gradesubmission.repository.GradeRepository;
 
@@ -37,6 +38,8 @@ public class GradeServiceImpl implements GradeService {
         Student student = studentService.getStudent(studentId);
         grade.setStudent(student);
         Course course = courseRepository.findById(courseId).get();
+        if (!(student.getCourses().contains(course)))
+            throw new StudentNotEnrolledException(studentId, courseId);
         grade.setCourse(course);
 
         return gradeRepository.save(grade);
